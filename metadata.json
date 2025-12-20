@@ -1,0 +1,8 @@
+{
+    "uuid": "openweather@firelokdesigns",
+    "name": "Open Weather Desklet",
+    "description": "A modern, asynchronous weather desklet for Linux Mint using OpenWeatherMap API 3.0.",
+    "version": "1.0",
+    "author": "Scott C.",
+    "prevent-decorations": true
+}
