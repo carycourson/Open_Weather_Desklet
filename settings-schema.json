@@ -1,0 +1,108 @@
+{
+    "layout_main": {
+        "type": "section",
+        "description": "General"
+    },
+    "apiProvider": {
+        "type": "combobox",
+        "default": "owm",
+        "description": "Weather Data Source",
+        "options": {
+            "OpenWeatherMap (Key Required)": "owm",
+            "Open-Meteo (Free, No Key)": "meteo"
+        }
+    },
+    "apiKey": {
+        "type": "entry",
+        "default": "",
+        "description": "API Key (For OpenWeatherMap)",
+        "dependency": "apiProvider=owm"
+    },
+    "location": {
+        "type": "entry",
+        "default": "",
+        "description": "Location (Lat,Lon)",
+        "tooltip": "Example: 31.06,-97.89"
+    },
+    "locationLabel": {
+        "type": "entry",
+        "default": "",
+        "description": "City Name (Optional)",
+        "tooltip": "Overrides automatic lookup"
+    },
+    "refreshInterval": {
+        "type": "spinbutton",
+        "default": 30,
+        "min": 10,
+        "max": 60,
+        "step": 5,
+        "units": "mins",
+        "description": "Update Frequency"
+    },
+    "layout_display": {
+        "type": "section",
+        "description": "Display & Units"
+    },
+    "deskletLayout": {
+        "type": "combobox",
+        "default": "vertical",
+        "description": "Layout Orientation",
+        "options": {
+            "Vertical (Tower)": "vertical",
+            "Horizontal (Wide)": "horizontal"
+        }
+    },
+    "transparency": {
+        "type": "scale",
+        "default": 0.7,
+        "min": 0.0,
+        "max": 1.0,
+        "step": 0.1,
+        "description": "Background Opacity"
+    },
+    "units": {
+        "type": "combobox",
+        "default": "metric",
+        "description": "Measurement System",
+        "options": {
+            "Metric (°C, m/s)": "metric",
+            "Imperial (°F, mph)": "imperial"
+        }
+    },
+    "iconSource": {
+        "type": "combobox",
+        "default": "local",
+        "description": "Icon Source",
+        "options": {
+            "Local (VClouds/Custom)": "local",
+            "Online (Provider Default)": "online"
+        }
+    },
+    "iconSet": {
+        "type": "entry",
+        "default": "vclouds",
+        "description": "Local Icon Folder Name",
+        "dependency": "iconSource=local"
+    },
+    "layout_data": {
+        "type": "section",
+        "description": "Data & Forecast"
+    },
+    "forecastMode": {
+        "type": "combobox",
+        "default": "daily",
+        "description": "Forecast View",
+        "options": {
+            "Daily Forecast": "daily",
+            "Hourly Forecast": "hourly"
+        }
+    },
+    "forecastItems": {
+        "type": "scale",
+        "default": 4,
+        "min": 1,
+        "max": 12,
+        "step": 1,
+        "description": "Number of Items to Show"
+    }
+}
