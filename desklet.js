@@ -151,7 +151,7 @@ class OpenWeatherDesklet extends Desklet.Desklet {
         this.panelForecast = new St.BoxLayout({ vertical: true, style: "border-top: 1px solid rgba(255,255,255,0.1); padding-top: 5px;" });
         this.panelForecastContainer.add(this.panelForecast);
 
-        this.lblUpdated = new St.Label({ text: "Updated: --:--", style: "color: #666; font-size: 0.7em; margin-top: 5px; text-align: center;" });
+        this.lblUpdated = new St.Label({ text: "Updated: --:--", style: "color: #fff; font-size: 0.7em; margin-top: 5px; text-align: center;" });
         this.panelForecastContainer.add(this.lblUpdated);
 
         this.window.add(this.panelForecastContainer);
