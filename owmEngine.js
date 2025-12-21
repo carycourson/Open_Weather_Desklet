@@ -13,21 +13,21 @@ var OwmEngine = class OwmEngine {
         let lon = location.split(",")[1].trim();
 
         let url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&units=${units}&exclude=minutely&appid=${apiKey}`;
-        
+
         let message = Soup.Message.new('GET', url);
         _httpSession.send_and_read_async(message, 0, null, (session, result) => {
             try {
                 let bytes = session.send_and_read_finish(result);
                 let decoder = new TextDecoder('utf-8');
                 let raw = JSON.parse(decoder.decode(bytes.toArray()));
-                
+
                 // NORMALIZE DATA
                 let unified = {
                     current: {
                         temp: Math.round(raw.current.temp),
                         feels: Math.round(raw.current.feels_like),
                         desc: raw.current.weather[0].description,
-                        icon: raw.current.weather[0].icon, // "01d"
+                        icon: raw.current.weather[0].icon,
                         hum: raw.current.humidity,
                         wind: Math.round(raw.current.wind_speed),
                         windDeg: raw.current.wind_deg,
@@ -73,7 +73,7 @@ var OwmEngine = class OwmEngine {
                     onSuccess(unified);
                 }
 
-            } catch (e) { global.logError("OWM Error: " + e); }
+            } catch (e) { globalThis.logError("OWM Error: " + e); }
         });
     }
 }

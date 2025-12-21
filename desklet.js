@@ -73,7 +73,7 @@ class OpenWeatherDesklet extends Desklet.Desklet {
         }
 
         this.refreshWeather();
-        
+
         let interval = (this.refreshInterval < 10) ? 600 : (this.refreshInterval * 60);
         this.timeout = Mainloop.timeout_add_seconds(interval, Lang.bind(this, this.refreshWeather));
     }
@@ -120,26 +120,15 @@ class OpenWeatherDesklet extends Desklet.Desklet {
         this.lblFeels = new St.Label({ text: "", style: "font-size: 0.85em; color: #ddd; margin-bottom: 8px;" });
         this.panelCurrent.add(this.lblFeels);
 
-///////////////////
-        // this.panelDetails = new St.BoxLayout({ vertical: true });
-        // this.lblDetail1 = new St.Label({ text: "", style: "font-size: 0.75em; color: #ccc;" }); 
-        // this.lblDetail2 = new St.Label({ text: "", style: "font-size: 0.75em; color: #ccc;" }); 
-        // this.panelCurrent.add(this.panelDetails);
-        // this.panelDetails.add(this.lblDetail1);
-        // this.panelDetails.add(this.lblDetail2);
-///////////////////
-        // 1. Create the main details vertical stack
         this.panelDetails = new St.BoxLayout({ vertical: true });
-        this.panelCurrent.add(this.panelDetails); // Add the stack to the main panel FIRST
+        this.panelCurrent.add(this.panelDetails);
 
-        // 2. Create the FIRST line (The one with the rotating arrow)
         this.lineWind = new St.BoxLayout({ 
             vertical: false, 
-            style: "margin-bottom: 2px;" // Optional spacing
+            style: "margin-bottom: 2px;"
         });
         this.panelDetails.add(this.lineWind);
 
-        // 3. Add the three parts of the wind line to the 'lineWind' box
         this.lblHumPop = new St.Label({ text: "", style: "font-size: 0.75em; color: #ccc;" });
         this.lineWind.add(this.lblHumPop);
 
@@ -152,11 +141,9 @@ class OpenWeatherDesklet extends Desklet.Desklet {
         this.lblWindData = new St.Label({ text: "", style: "font-size: 0.75em; color: #ccc;" });
         this.lineWind.add(this.lblWindData);
 
-        // 4. Create the SECOND line (Sun/Moon/UV)
         this.lblDetail2 = new St.Label({ text: "", style: "font-size: 0.75em; color: #ccc;" }); 
         this.panelDetails.add(this.lblDetail2); 
-///////////////////
-        
+
         this.window.add(this.panelCurrent);
 
         // --- FORECAST ---
@@ -228,38 +215,29 @@ class OpenWeatherDesklet extends Desklet.Desklet {
         let desc = data.current.desc;
         this.lblDesc.set_text(desc.charAt(0).toUpperCase() + desc.slice(1));
         this.loadIcon(data.current.icon, this.iconBin, 85);
-//////////
+
         // Details
-        // let windUnit = (this.units === "imperial") ? "mph" : "m/s";
         let windDir = this.getWindDir(data.current.windDeg);
-        // 1. Set the text labels around the arrow
         let windUnit = (this.units === "imperial") ? "mph" : "m/s";
         this.lblHumPop.set_text(`💧 ${data.today.pop}%  |  Hum: ${data.current.hum}%  | `);
         this.lblWindData.set_text(` @ ${data.current.wind}${windUnit}`);
 
-        // 2. Handle the Arrow rotation
         let arrowPath = this.metadata.path + "/wind-arrow.png";
         let arrowFile = Gio.File.new_for_path(arrowPath);
 
         if (arrowFile.query_exists(null)) {
-            // Load the PNG
             let texture = St.TextureCache.get_default().load_file_async(arrowFile, -1, 16, 16, 1.0);
             texture.min_filter = Clutter.ScalingFilter.TRILINEAR;
             texture.mag_filter = Clutter.ScalingFilter.LINEAR;
 
-            // Set pivot to center (0.5, 0.5) so it rotates in place
             texture.set_pivot_point(0.5, 0.5);
 
-            // Apply rotation from the API degrees
-            // North is 0, East is 90, etc.
             texture.set_rotation_angle(Clutter.RotateAxis.Z_AXIS, data.current.windDeg);
 
             this.arrowBin.set_child(texture);
         } else {
-            // Fallback if file is missing
             this.arrowBin.set_child(new St.Label({text: "💨"}));
         }
-//////////
 
         let moonStr = (this.apiProvider === "owm") ? this.getMoonSymbol(data.today.moonPhase) : "";
 
@@ -267,8 +245,6 @@ class OpenWeatherDesklet extends Desklet.Desklet {
         let sunSet = this.formatTime(data.current.sunset);
         let moonRise = (data.today.moonRise) ? this.formatTime(data.today.moonRise) : "";
 
-        // this.lblDetail1.set_text(`💧 ${data.today.pop}%  |  Hum: ${data.current.hum}%  |  💨 ${windDir} @ ${data.current.wind}${windUnit}`);
-        
         let astroStr = `☀️ ${sunRise}-${sunSet}`;
         if (data.current.uv > 0) astroStr += `  |  UV:${data.current.uv}`;
         if (moonStr !== "") astroStr += `  |  ${moonStr} ${moonRise}`;
