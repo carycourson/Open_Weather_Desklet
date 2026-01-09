@@ -222,7 +222,7 @@ class OpenWeatherDesklet extends Desklet.Desklet {
         this.lblHumPop.set_text(`💧 ${data.today.pop}%  |  Hum: ${data.current.hum}%  | `);
         this.lblWindData.set_text(` @ ${data.current.wind}${windUnit}`);
 
-        let arrowPath = this.metadata.path + "/wind-arrow.png";
+        let arrowPath = this.metadata.path + "/icons/wind-arrow.png";
         let arrowFile = Gio.File.new_for_path(arrowPath);
 
         if (arrowFile.query_exists(null)) {
