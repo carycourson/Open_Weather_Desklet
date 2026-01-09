@@ -10,8 +10,6 @@ I built this because the existing options—specifically the legacy desklet by `
 
 Rather than attempting to patch deprecated code, I treated this as a clean-slate engineering challenge. I wanted to build a reliable solution that works today, while using the opportunity to master the Cinnamon environment, system-level JavaScript, and asynchronous state management.
 
-Here is the updated Markdown. I have stripped out the exaggerated features and moved the unfinished items to the "Roadmap" section. This keeps the README honest while showing your ambition for the project.
-
 ## ✨ Current Features
 
 * **Dual-Provider Support:** Currently functional with OpenWeatherMap and Meteo.
